@@ -140,11 +140,14 @@ See `helm-eww' for more details."
   (helm-build-sync-source "EWW buffers"
     :candidates (seq-filter (lambda (b) (with-current-buffer b (derived-mode-p 'eww-mode))) (buffer-list))
     :candidate-transformer 'helm-eww-highlight-buffers
-    :action '(("Switch to buffer(s)" . helm-buffer-switch-buffers)
+    :action `(("Switch to buffer(s)" . helm-buffer-switch-buffers)
               ("Open URL(s) in external browser" . helm-eww-browser-with-external-browser)
-              ("Switch to buffer(s) in other window `C-c o'" . helm-buffer-switch-buffers-other-window)
-              ("Switch to buffer in other frame `C-c C-o'" . switch-to-buffer-other-frame)
-              ("Kill buffer(s) `M-D`" . helm-kill-marked-buffers))
+              (,(substitute-command-keys "Switch to buffer(s) in other window \\<helm-eww-buffers-map>`\\[helm-buffer-switch-other-window]'")
+               . helm-buffer-switch-buffers-other-window)
+              (,(substitute-command-keys "Switch to buffer in other frame \\<helm-eww-buffers-map>`\\[helm-buffer-switch-other-frame]'")
+               . switch-to-buffer-other-frame)
+              (,(substitute-command-keys "Kill buffer(s) \\<helm-eww-buffers-map>`\\[helm-buffer-run-kill-buffers]'")
+               . helm-kill-marked-buffers))
     ;; When follow-mode is on, the persistent-action allows for multiple candidate selection.
     :persistent-action 'helm-buffers-list-persistent-action
     :keymap helm-eww-buffers-map))
@@ -211,11 +214,14 @@ See `helm-eww-bookmarks' for more details."
     :candidates (mapcar (lambda (e) (list (plist-get e :url) (plist-get e :title))) eww-bookmarks)
     :candidate-transformer 'helm-eww-highlight-bookmarks
     :candidate-number-limit 1000
-    :action '(("Open URL(s)" . helm-eww-switch-buffers)
+    :action `(("Open URL(s)" . helm-eww-switch-buffers)
               ("Open URL(s) in external browser" . helm-eww-browser-with-external-browser)
-              ("Open URL(s) in other window `C-c o'" . helm-eww-switch-other-window)
-              ("Open URL in other frame `C-c C-o'" . helm-eww-switch-other-frame)
-              ("Delete bookmark(s) `M-D`" . helm-eww-bookmarks-delete))
+              (,(substitute-command-keys "Open URL(s) in other window \\<helm-eww-bookmarks-map>`\\[helm-eww-switch-other-window]'")
+               . helm-eww-switch-other-window)
+              (,(substitute-command-keys "Open URL in other frame \\<helm-eww-bookmarks-map>`\\[helm-eww-switch-other-frame]'")
+               . helm-eww-switch-other-frame)
+              (,(substitute-command-keys "Delete bookmark(s) \\<helm-eww-bookmarks-map>`\\[helm-eww-bookmarks-delete]'")
+               . helm-eww-bookmarks-delete))
     :keymap helm-eww-bookmarks-map))
 
 ;;;###autoload
