@@ -26,15 +26,9 @@
 
 ;;; Code:
 (require 'helm)
+(require 'helm-buffers)
+(require 'helm-utils)
 (require 'eww)
-
-;; Silence compiler.
-(defvar helm-buffer-details-flag)
-(defvar helm-buffers-end-truncated-string)
-(defvar helm-buffers-fuzzy-matching)
-(declare-function helm-buffer--get-preselection "helm-buffers")
-(declare-function helm-window-show-buffers "helm-utils")
-(declare-function helm-buffers--pattern-sans-filters "helm-buffers")
 
 (defvar helm-eww-buffer-max-length 51
   "Max length of EWW buffer names before truncating.
