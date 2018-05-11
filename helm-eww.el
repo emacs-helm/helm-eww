@@ -38,12 +38,19 @@ See `helm-buffer-max-length`.  This variable's default is so that
 the EWW title starts at the column of the open parenthesis in
 `helm-buffers-list' detailed view.")
 
+(defun helm-eww-buffer-length ()
+  "Return the dynamic length of EWW buffer names.
+It depends on the width of the current Helm window.
+It won't shrink under `helm-eww-buffer-max-length'."
+  (max helm-eww-buffer-max-length
+       (/ (with-helm-window (window-body-width)) 2)))
+
 (defun helm-eww-toggle-buffers-details ()
   (interactive)
   (with-helm-alive-p
     (let* ((buf (helm-get-selection))
            ;; `helm-buffer--get-preselection' uses `helm-buffer-max-length'.
-           (helm-buffer-max-length helm-eww-buffer-max-length)
+           (helm-buffer-max-length (helm-eww-buffer-length))
            (preselect (and (bufferp buf) (helm-buffer--get-preselection buf))))
       (setq helm-buffer-details-flag (not helm-buffer-details-flag))
       ;; TODO: `helm-force-update' seems to be necessary to be necessary to
@@ -115,13 +122,13 @@ new buffer."
   "Transformer function to highlight EWW BUFFERS."
   (cl-loop for i in buffers
            for (url title) = (with-current-buffer i (list (eww-current-url) (plist-get eww-data :title)))
-           for truncbuf = (if (> (string-width url) helm-eww-buffer-max-length)
+           for truncbuf = (if (> (string-width url) (helm-eww-buffer-length))
                               (helm-substring-by-width
-                               url helm-eww-buffer-max-length
+                               url (helm-eww-buffer-length)
                                helm-buffers-end-truncated-string)
                             (concat url
                                     (make-string
-                                     (- (+ helm-eww-buffer-max-length
+                                     (- (+ (helm-eww-buffer-length)
                                            (length helm-buffers-end-truncated-string))
                                         (string-width url))
                                      ? )))
@@ -176,13 +183,13 @@ See `helm-eww' for more details."
   "Transformer function to highlight CANDIDATES list.
 Each candidate is a list of (URL TITLE)."
   (cl-loop for (url title) in candidates
-           for truncbuf = (if (> (string-width url) helm-eww-buffer-max-length)
+           for truncbuf = (if (> (string-width url) (helm-eww-buffer-length))
                               (helm-substring-by-width
-                               url helm-eww-buffer-max-length
+                               url (helm-eww-buffer-length)
                                helm-buffers-end-truncated-string)
                             (concat url
                                     (make-string
-                                     (- (+ helm-eww-buffer-max-length
+                                     (- (+ (helm-eww-buffer-length)
                                            (length helm-buffers-end-truncated-string))
                                         (string-width url))
                                      ? )))
@@ -245,13 +252,13 @@ See `helm-eww-bookmarks' for more details."
 CANDIDATES are `eww-history' elements."
   (cl-loop for e in candidates
            for (url title) = (list (plist-get e :url) (plist-get e :title))
-           for truncbuf = (if (> (string-width url) helm-eww-buffer-max-length)
+           for truncbuf = (if (> (string-width url) (helm-eww-buffer-length))
                               (helm-substring-by-width
-                               url helm-eww-buffer-max-length
+                               url (helm-eww-buffer-length)
                                helm-buffers-end-truncated-string)
                             (concat url
                                     (make-string
-                                     (- (+ helm-eww-buffer-max-length
+                                     (- (+ (helm-eww-buffer-length)
                                            (length helm-buffers-end-truncated-string))
                                         (string-width url))
                                      ? )))
