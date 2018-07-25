@@ -121,7 +121,9 @@ new buffer."
 (defun helm-eww-highlight-buffers (buffers)
   "Transformer function to highlight EWW BUFFERS."
   (cl-loop for i in buffers
-           for (url title) = (with-current-buffer i (list (eww-current-url) (plist-get eww-data :title)))
+           ;; Warning: URL can be missing.
+           for (url title) = (with-current-buffer i (list (or (eww-current-url) "")
+                                                          (plist-get eww-data :title)))
            for truncbuf = (if (> (string-width url) (helm-eww-buffer-length))
                               (helm-substring-by-width
                                url (helm-eww-buffer-length)
