@@ -210,7 +210,7 @@ Each candidate is a list of (URL TITLE)."
     (setq eww-bookmarks (seq-remove (lambda (b) (string= (plist-get b :url) c))
                                     eww-bookmarks)))
   (eww-write-bookmarks))
-(put 'helm-eww-bookmarks-kill 'helm-only t)
+(put 'helm-eww-bookmarks-delete 'helm-only t)
 
 (defun helm-eww-bookmarks-build-source ()
   "Build source for EWW bookmarks.
