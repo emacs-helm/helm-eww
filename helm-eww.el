@@ -79,6 +79,7 @@ word(s) will be searched for via `eww-search-prefix'."
   "Open marked URL(s) in EWW.
 If more than one URL is marked, or with prefix argument, open in
 new buffer."
+  (interactive)
   (let ((c (helm-marked-candidates)))
     (if (and (= 1 (length c))
              (null helm-current-prefix-arg))
@@ -88,11 +89,13 @@ new buffer."
 
 (defun helm-eww-switch-other-window (_candidate)
   "Open marked URL(s) in other windows."
+  (interactive)
   (helm-window-show-buffers (mapcar 'helm-eww-new-buffer (helm-marked-candidates)) t))
 (put 'helm-eww-switch-other-window 'helm-only t)
 
 (defun helm-eww-switch-other-frame (candidate)
   "Open URL of marked CANDIDATE in other frame."
+  (interactive)
   (switch-to-buffer-other-frame (helm-eww-new-buffer candidate)))
 (put 'helm-eww-switch-other-frame 'helm-only t)
 
@@ -206,6 +209,7 @@ Each candidate is a list of (URL TITLE)."
 
 (defun helm-eww-bookmarks-delete (_candidate)
   "Delete all bookmarks with the URLs of the marked candidates."
+  (interactive)
   (dolist (c (helm-marked-candidates))
     (setq eww-bookmarks (seq-remove (lambda (b) (string= (plist-get b :url) c))
                                     eww-bookmarks)))
