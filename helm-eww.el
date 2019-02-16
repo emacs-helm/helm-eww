@@ -207,7 +207,7 @@ Each candidate is a list of (URL TITLE)."
                              (funcall helm-fuzzy-matching-highlight-fn url))
                            url))))
 
-(defun helm-eww-bookmarks-delete (_candidate)
+(defun helm-eww-bookmarks-delete (&optional _candidate)
   "Delete all bookmarks with the URLs of the marked candidates."
   (interactive)
   (dolist (c (helm-marked-candidates))
