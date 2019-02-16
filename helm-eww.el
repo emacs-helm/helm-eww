@@ -1,10 +1,10 @@
 ;;; helm-eww.el --- Helm UI wrapper for EWW. -*- lexical-binding: t -*-
 
-;; Copyright (C) 2018 Pierre Neidhardt <mail@ambrevar.xyz>
+;; Copyright (C) 2018, 2019 Pierre Neidhardt <mail@ambrevar.xyz>
 
 ;; Author: Pierre Neidhardt <mail@ambrevar.xyz>
 ;; URL: https://github.com/emacs-helm/helm-eww
-;; Version: 1.0
+;; Version: 1.1
 ;; Package-Requires: ((emacs "24.4") (helm "2.8.6") (seq "1.8"))
 ;; Keywords: helm, packages
 
