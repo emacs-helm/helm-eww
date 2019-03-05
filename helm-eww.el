@@ -310,7 +310,11 @@ See `helm-eww-bookmarks' for more details."
 
 (defvar helm-eww-new
   (helm-build-dummy-source "Open new page (empty for URL at point)"
-    :action (helm-make-actions "Open new page" 'helm-eww-new-buffer)))
+    :action (helm-make-actions
+             "Open new page" 'helm-eww-new-buffer
+             "Open new page externally" 'helm-eww-browser-with-external-browser
+             "Open new page in new window" 'helm-eww-switch-other-window
+             "Open new page in new frame" 'helm-eww-switch-other-frame)))
 
 ;; All in one.
 ;;;###autoload
