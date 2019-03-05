@@ -71,11 +71,12 @@ If the input doesn't look like an URL or a domain name, the
 word(s) will be searched for via `eww-search-prefix'."
   (let ((b (generate-new-buffer "*eww*"))
         (url-at-point (thing-at-point-url-at-point)))
-    (with-current-buffer b
-      (eww-mode)
-      (eww (or (and url (not (string= "" url)) url)
-               url-at-point
-               "")))
+    (save-window-excursion
+      (with-current-buffer b
+        (eww-mode)
+        (eww (or (and url (not (string= "" url)) url)
+                 url-at-point
+                 ""))))
     b))
 
 (defun helm-eww-switch-buffers (_candidate)
