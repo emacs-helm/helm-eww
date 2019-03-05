@@ -65,14 +65,17 @@ It won't shrink under `helm-eww-buffer-max-length'."
         (helm-force-update)))))
 (put 'helm-eww-toggle-buffers-details 'helm-only t)
 
-(defun helm-eww-new-buffer (url)
+(defun helm-eww-new-buffer (&optional url)
   "Fetch URL and render the page in a new buffer.
 If the input doesn't look like an URL or a domain name, the
 word(s) will be searched for via `eww-search-prefix'."
-  (let ((b (generate-new-buffer "*eww*")))
+  (let ((b (generate-new-buffer "*eww*"))
+        (url-at-point (thing-at-point-url-at-point)))
     (with-current-buffer b
       (eww-mode)
-      (eww url))
+      (eww (or (and url (not (string= "" url)) url)
+               url-at-point
+               "")))
     b))
 
 (defun helm-eww-switch-buffers (_candidate)
@@ -305,7 +308,7 @@ See `helm-eww-bookmarks' for more details."
 
 
 (defvar helm-eww-new
-  (helm-build-dummy-source "Open new page"
+  (helm-build-dummy-source "Open new page (empty for URL at point)"
     :action (helm-make-actions "Open new page" 'helm-eww-new-buffer)))
 
 ;; All in one.
