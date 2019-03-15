@@ -29,6 +29,7 @@
 (require 'helm-buffers)
 (require 'helm-utils)
 (require 'eww)
+(require 'thingatpt)
 
 (defvar helm-eww-buffer-max-length 51
   "Max length of EWW buffer names before truncating.
