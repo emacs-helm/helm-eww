@@ -4,7 +4,7 @@
 
 ;; Author: Pierre Neidhardt <mail@ambrevar.xyz>
 ;; URL: https://github.com/emacs-helm/helm-eww
-;; Version: 1.1
+;; Version: 1.2
 ;; Package-Requires: ((emacs "24.4") (helm "2.8.6") (seq "1.8"))
 ;; Keywords: helm, packages
 
